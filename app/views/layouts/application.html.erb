@@ -17,8 +17,10 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body class="h-screen bg-gray-200">
+  <body class="bg-gray-500">
     <%= render "layouts/nav" %>
-    <%= yield %>
+    <div id="posts" class="flex flex-col items-center my-10 gap-12">
+      <%= yield %>
+    </div>
   </body>
 </html>
