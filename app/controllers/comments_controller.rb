@@ -1,14 +1,14 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: %i[ create destroy ]
+  before_action :set_post
 
   def create
     @comment = @post.comments.build(comment_params)
     @comment.user_id = current_user.id
 
     if @comment.save
-      redirect_to root_path, notice: "Comment sent."
+      redirect_to root_path, notice: "Comment added!"
     else
-      render root_path, alert: "Something went wrong with sending the comment."
+      render root_path, alert: "Something went wrong."
     end
   end
 
