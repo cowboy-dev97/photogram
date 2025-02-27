@@ -1,7 +1,7 @@
 <nav class="bg-gray-800 h-12 mx-auto flex items-center justify-between text-gray-400">
-  <p><%= link_to "Instagram", root_path, class: "font-bold text-gray-300 hover:text-gray-50 h-full p-5" %></p>
+  <p><%= link_to "Keijogram", root_path, class: "font-bold text-gray-300 hover:text-gray-50 h-full p-5" %></p>
   <% if user_signed_in? %>
-    <p class="text-white bg-indigo-700 rounded-lg px-4 py-1">Logged in as: <%= current_user.username.capitalize %></p>
+    <p class="text-white bg-indigo-700 rounded-lg px-4 py-1">Logged in as: <%= current_user.user_name %></p>
   <% end%>
   <ul class="flex h-full list-none items-center gap-4 pr-5">
     <% if user_signed_in? %>

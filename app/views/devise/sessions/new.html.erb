@@ -1,17 +1,18 @@
-<div class="mx-auto flex flex-col items-center justify-center max-w-2xl bg-white rounded-lg mt-10">
-  <h2 class="text-3xl">Log in</h2>
+<div class="mx-auto max-w-2xl bg-white mt-10 flex flex-col justify-between items-center p4 shadow-2xl">
+  <h2 class="text-2xl font-bold text-center">Log in</h2>
+  <%= link_to "Go back", root_path, class:"cursor-pointer text-blue-500 hover:underline decoration-2 underline-offset-2"%>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
       <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"w-full" %>
     </div>
     <div class="field">
-      <%= f.label :username %><br />
-      <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
+      <%= f.label :user_name %><br />
+      <%= f.text_field :user_name, autofocus: true, autocomplete: "username", class:"w-full" %>
     </div>
     <div class="field">
       <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password" %>
+      <%= f.password_field :password, autocomplete: "current-password", class:"w-full" %>
     </div>
     <% if devise_mapping.rememberable? %>
       <div class="field">
@@ -19,9 +20,10 @@
         <%= f.label :remember_me %>
       </div>
     <% end %>
-    <div class="actions mt-5 mx-auto">
-      <%= f.submit "Log in", class:"py-2 px-4 rounded-lg bg-blue-500 text-white hover:scale-105 cursor-pointer" %>
+    <div class="my-6 flex gap-4 items-center justify-center">
+        <%= f.submit "Log in", class:"py-2 px-4 rounded-lg bg-lime-800 text-lime-400 hover:scale-105 cursor-pointer" %>
+        <%= link_to "Need to sign up?", new_user_registration_path , class:"py-2 px-4 rounded-lg bg-lime-400 text-lime-800 hover:scale-105 cursor-pointer" %>
+        <%= render "devise/shared/links" %>
     </div>
   <% end %>
-  <%= render "devise/shared/links" %>
 </div>
