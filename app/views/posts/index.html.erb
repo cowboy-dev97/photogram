@@ -11,7 +11,7 @@
       <% end %>
     </div>
     <div class="flex justify-between py-2">
-      <p><strong>Antonvvvv</strong> <span class="italic"><%= post.caption %></span>, <%= distance_of_time_in_words(Time.current, post.created_at )%> ago</p>
+      <p><strong><%= post.user.user_name %></strong> <span class="italic"><%= post.caption %></span></p>
       <div class="likes flex">
         <p>2 likes</p>
         <svg id='Stitched_Heart_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
@@ -31,29 +31,44 @@
         </svg>
       </div>
     </div>
-    <section class="flex flex-col items-center justify-between h-100 bg-gray-50 border-1 border-gray-200">
+    <p class="text-gray-500 -mt-3">
+      <%= distance_of_time_in_words(Time.current, post.created_at )%>
+    </p>
+    <section class="flex flex-col items-center justify-between">
       <h2 class="mt-4 text-2xl font-bold">Comments</h2>
       <%# Loop comments %>
-      <% if post.comments.any? %>
-        <% post.comments.each do |comment| %>
-          <% if comment.user == current_user %>
-            <p><%= comment.user.username  %>: <%= comment.content %> <%= button_to "Delete comment", post_comment_path, method: :delete, data: { turbo_confirm: "Are you sure?"} %></p>
-          <% else %>
-            <p><%= comment.user.username  %>: <%= comment.content %></p>
+      <div class="comments flex-1 w-full flex flex-col items-between">
+        <% if post.comments.any? %>
+          <% post.comments.each do |comment| %>
+            <div class="flex gap-2 justify-between">
+              <p>
+                <strong><%= comment.user.user_name  %>:</strong>
+                <%= comment.content %>
+              </p>
+              <% if comment.user == current_user %>
+                <%= button_to post_comment_path(post.id, comment.id), method: :delete, data: { turbo_confirm: "Are you sure?"}, class: "hover:rotate-5 hover:scale-110 cursor-pointer" do %>
+                  <svg id='Delete_24' width='12' height='12' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+                    <g transform="matrix(1.15 0 0 1.15 12 12)" >
+                      <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z" stroke-linecap="round" />
+                    </g>
+                  </svg>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
+        <% else %>
+          <p>No comments yet :(</p>
         <% end %>
-      <% else %>
-        <p>No comments yet :(</p>
-      <% end %>
-      <%# Create comments %>
-      <% if user_signed_in? %>
-        <%= form_with model: [post, post.comments.build], class:"w-full" do |form| %>
-          <div class="relative flex justify-center items-center">
-            <%= form.text_field :content, class:"py-2 pl-6 pr-12 w-full rounded-full",  placeholder: "Add a comment..."%>
-            <%= form.submit "Post", class:"block text-blue-500 font-bold right-3 top-2 hover:underline cursor-pointer absolute" %>
-          </div>
-        <% end %>
-      <% end %>
+      </div>
     </section>
+    <%# Create comments %>
+    <% if user_signed_in? %>
+      <%= form_with model: [post, post.comments.build], class:"w-full" do |form| %>
+        <div class="relative flex justify-center items-center">
+          <%= form.text_field :content, class:"py-2 pl-6 pr-12 w-full rounded-full",  placeholder: "Add a comment..."%>
+          <%= form.submit "Post", class:"block text-blue-500 font-bold right-3 top-2 hover:underline cursor-pointer absolute" %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

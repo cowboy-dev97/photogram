@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    comment_params.expect(comment: [ :content ])
+    params.expect(comment: [ :content ])
   end
 
   def set_post
