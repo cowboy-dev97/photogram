@@ -3,15 +3,19 @@
     <div class="flex">
       <div class="flex justify-between w-full">
         <div class="flex">
-          <p>Antonvvv</p>
+          <p><%= @post.user.user_name %></p>
           <span class="px-1">&#183;</span>
           <%= link_to "Follow", root_path, class:"text-blue-300" %>
         </div>
-        <div class="flex">
-          <%= link_to "Edit post", edit_post_path, class:"text-blue-300" %>
-          <span class="px-1">&#183;</span>
+        <% if @post.user.id === current_user.id%>
+          <div class="flex">
+            <%= link_to "Edit post", edit_post_path, class:"text-blue-300" %>
+            <span class="px-1"> | </span>
+            <%= link_to "Back", root_path, class:"text-blue-300"%>
+          </div>    
+        <% else %>
           <%= link_to "Back", root_path, class:"text-blue-300"%>
-        </div>
+        <% end%>
       </div>
       <div class="post-right flex">
       </div>

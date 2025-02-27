@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :find_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ new create edit update destroy]
+  before_action :owned_post, only: %i[ edit update destroy ]
   def index
     @posts = Post.all.order(created_at: :desc)
   end
@@ -13,7 +14,8 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
+
     if @post.save
       redirect_to @post, notice: "Post succesfully created."
     else
@@ -26,7 +28,9 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
+    @post = current_user.posts.build(post_params)
+
+    if @post.save
       redirect_to @post, notice: "Post succesfully updated."
     else
       flash.now[:alert] = "Something went wrong with updating the post"
@@ -47,5 +51,12 @@ class PostsController < ApplicationController
 
   def post_params
     params.expect(post: [ :caption, :image ])
+  end
+
+  def owned_post
+    unless current_user == @post.user
+      flash[:error] = "That post doesn't belong to you!"
+      redirect_to root_path
+    end
   end
 end

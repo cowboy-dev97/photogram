@@ -1,29 +1,31 @@
-<div class="mx-auto max-w-2xl bg-white mt-10 flex flex-col justify-between items-center p4 shadow-2xl">
-  <h2 class="text-2xl font-bold text-center">Log in</h2>
-  <%= link_to "Go back", root_path, class:"cursor-pointer text-blue-500 hover:underline decoration-2 underline-offset-2"%>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"w-full" %>
-    </div>
-    <div class="field">
-      <%= f.label :user_name %><br />
-      <%= f.text_field :user_name, autofocus: true, autocomplete: "username", class:"w-full" %>
-    </div>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "current-password", class:"w-full" %>
-    </div>
-    <% if devise_mapping.rememberable? %>
+<div class="mx-auto max-w-md bg-white mt-10 flex flex-col justify-center items-center p-6 shadow-2xl rounded-lg">
+  <h2 class="text-2xl font-bold text-center mb-4">Log in</h2>
+  <%= link_to "Go back", root_path, class:"text-blue-500 hover:underline decoration-2 underline-offset-2 mb-4"%>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "w-full" }) do |f| %>
+    <div class="flex flex-col gap-4 w-full">
       <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
+        <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"w-full p-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500" %>
       </div>
-    <% end %>
-    <div class="my-6 flex gap-4 items-center justify-center">
-        <%= f.submit "Log in", class:"py-2 px-4 rounded-lg bg-lime-800 text-lime-400 hover:scale-105 cursor-pointer" %>
-        <%= link_to "Need to sign up?", new_user_registration_path , class:"py-2 px-4 rounded-lg bg-lime-400 text-lime-800 hover:scale-105 cursor-pointer" %>
-        <%= render "devise/shared/links" %>
+      <div class="field">
+        <%= f.label :user_name, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.text_field :user_name, autocomplete: "username", class:"w-full p-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500" %>
+      </div>
+      <div class="field">
+        <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= f.password_field :password, autocomplete: "current-password", class:"w-full p-2 border border-gray-300 rounded-md focus:ring-lime-500 focus:border-lime-500" %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center gap-2">
+          <%= f.check_box :remember_me, class: "rounded text-lime-600 focus:ring-lime-500" %>
+          <%= f.label :remember_me, class: "text-sm text-gray-700" %>
+        </div>
+      <% end %>
+      <div class="my-6 flex gap-4 items-center justify-center">
+        <%= f.submit "Log in", class:"py-2 px-4 rounded-lg bg-lime-800 text-white hover:scale-105 transition-transform cursor-pointer" %>
+        <%= link_to "Need to sign up?", new_user_registration_path, class:"py-2 px-4 rounded-lg bg-lime-400 text-lime-800 hover:scale-105 transition-transform cursor-pointer" %>
+      </div>
+      <%= render "devise/shared/links" %>
     </div>
   <% end %>
 </div>
