@@ -6,16 +6,15 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      redirect_to root_path, notice: "Comment added!"
+      redirect_to root_path
     else
-      render root_path, alert: "Something went wrong."
+      render "posts/index", status: :unprocessable_entity
     end
   end
 
 
   def destroy
     @comment = @post.comments.find(params[:id])
-
     @comment.destroy
     redirect_to root_path, notice: "Comment deleted"
   end
